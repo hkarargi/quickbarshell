@@ -10,3 +10,4 @@ fi
 git clone https://github.com/hkarargi/quickbarshell/
 cp ./quickbarshell/files/* $HOME/.config/quickshell/ -r
 rm -rf ./quickbarshell
+pkill quickshell;quickshell &
