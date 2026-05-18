@@ -6,8 +6,13 @@ if [ -d "$HOME/.config/quickshell" ]; then
 else
 	mkdir  $HOME/.config/quickshell
 fi
+if [ -d ./files ]; then
+	cp ./files/* $HOME/.config/quickshell -r
+else
+	git clone https://github.com/hkarargi/quickbarshell/
+	cp ./quickbarshell/files/* $HOME/.config/quickshell/ -r
+fi
 
-git clone https://github.com/hkarargi/quickbarshell/
-cp ./quickbarshell/files/* $HOME/.config/quickshell/ -r
 rm -rf ./quickbarshell
 pkill quickshell;quickshell &
+

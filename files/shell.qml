@@ -1,6 +1,7 @@
 //@ pragma UseQApplication
 
 import Quickshell
+import Quickshell.Hyprland
 import QtQuick
 
 import "modules"
@@ -33,7 +34,7 @@ PanelWindow {
 	Grid {
 		id: leftGrid
 		anchors.left: parent.left
-		Workspaces { }
+		Workspaces { persistentWorkspaces: 20 }
 	}
 }
 
