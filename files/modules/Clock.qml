@@ -5,6 +5,9 @@ import Quickshell.Io
 import "utils" as Utils
 
 Utils.TextModule { 
+	textAnchorHCenter: true
+	textAnchorVCenter: true
+
 	property var format: "hh:mm:ss AP"
 	property var icon: ""
 

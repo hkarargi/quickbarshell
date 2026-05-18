@@ -5,6 +5,8 @@ import QtQuick
 import "utils" as Utils
 
 Utils.TextIconModule {
+	textAnchorHCenter: true
+	textAnchorVCenter: true
 
 	width: 75
 	height: 30

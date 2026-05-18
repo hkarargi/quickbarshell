@@ -12,7 +12,9 @@ Utils.TextIconModule {
 		Utils.TrayUtils.getTrayItemsIncluding("Network")[0].display(root,globalPos.x+mouseX,globalPos.y+mouseY)
 
 	}
-	
+	textAnchorHCenter: true
+	textAnchorVCenter: true
+
 	icons: ["󰤯","󰤟","󰤢","󰤥","󰤨"]
 
 	prefix: netUtils.connected ? netUtils.activessid : "Disconnected..."

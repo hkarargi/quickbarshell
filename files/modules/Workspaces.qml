@@ -20,6 +20,9 @@ Utils.Base {
 			Utils.TextModule {
 				radius: 30;width: 18;height: 30
 
+				textAnchorHCenter: true
+				textAnchorVCenter: true
+
 				property int num: modelData
 				property bool isCurrent: Hyprland.focusedWorkspace?.id === num
 

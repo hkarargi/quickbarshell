@@ -19,6 +19,7 @@ PanelWindow {
 	property var backgroundColor: "#a0c7c4bf"
 
 	Grid {
+		spacing: 2
 		id: rightGrid
 		columns: children.length
 		anchors.right: parent.right
@@ -33,16 +34,19 @@ PanelWindow {
 	}
 
 	Grid {
+		spacing: 2
 		id: centerGrid
 		anchors.horizontalCenter: parent.horizontalCenter 
 		anchors.verticalCenter: parent.verticalCenter 
 	}
 
-	ColumnLayout {
+	Grid {
+		spacing: 2
 		id: leftGrid
 		anchors.left: parent.left
 		anchors.verticalCenter: parent.verticalCenter
 		Workspaces { persistentWorkspaces: 10 }
+		ActiveWindow { }
 	}
 }
 
