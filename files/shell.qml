@@ -34,7 +34,7 @@ PanelWindow {
 	Grid {
 		id: leftGrid
 		anchors.left: parent.left
-		Workspaces { persistentWorkspaces: 20 }
+		Workspaces { persistentWorkspaces: 10 }
 	}
 }
 

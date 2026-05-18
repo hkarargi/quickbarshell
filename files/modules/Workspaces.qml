@@ -1,6 +1,9 @@
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
+
+import "utils" as Utils
+
 Rectangle {
 	
 	id: rect
@@ -8,27 +11,13 @@ Rectangle {
 
 	property int persistentWorkspaces: 10
 
-	property var maxId: 0
 	
-	function findMaxId() {
-		var workspaces = [...Hyprland.workspaces.values].sort((a, b) => a?.id - b?.id);
-		workspaces = workspaces.filter(function(x) { return x.id > 0 });
-		var workspaceIds = workspaces.map(item => item.id);
-		maxId = workspaceIds[workspaceIds.length-1]
-		var persistentWorkspaceIds = [...Array(persistentWorkspaces).keys()].map(item => item+1)
-		var conjoinedWorkspaceIds = [...new Set([...workspaceIds,...persistentWorkspaceIds])].sort(function(a,b) { return a - b })
-		console.log(conjoinedWorkspaceIds)
-		if (maxId < persistentWorkspaces) {
-			return persistentWorkspaceIds
-		}
-		return	conjoinedWorkspaceIds
-	}
 	Grid { 
 		anchors.centerIn: parent
 		columns: children.length
 		spacing: 2
 		Repeater {
-			model: findMaxId()
+			model: Utils.WorkspaceUtils.getWorkspaceIds(10)
 			Rectangle {
 				radius: 30
 				width: 18
