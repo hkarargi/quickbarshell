@@ -7,6 +7,11 @@ import "utils" as Utils
 
 Utils.TextIconModule {
 	Utils.NetworkUtils { id: netUtils}
+
+	function clicked() {
+		Utils.TrayUtils.getTrayItemsIncluding("Network")[0].display(root,globalPos.x+mouseX,globalPos.y+mouseY)
+
+	}
 	
 	icons: ["󰤯","󰤟","󰤢","󰤥","󰤨"]
 

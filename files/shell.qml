@@ -28,7 +28,7 @@ PanelWindow {
 		Clock { format: "hh:mm AP"; icon: "" }
 		Clock { format: "dd/MM/yyyy"; icon: "󰸘" }
 		
-		Tray { }
+		Tray { excludedTrays: ["Network"]}
 		PowerButton { lockCommand: "hyprlock"; buttonText: "⏻ " }
 	}
 
