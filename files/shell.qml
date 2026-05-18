@@ -2,7 +2,9 @@
 
 import Quickshell
 import Quickshell.Hyprland
+import QtQml
 import QtQuick
+import QtQuick.Layouts
 
 import "modules"
 
@@ -13,27 +15,33 @@ PanelWindow {
 	anchors.right: true
 	implicitHeight: 35
 	color: "#00000000"
-
+	
+	property var backgroundColor: "#a0c7c4bf"
 
 	Grid {
 		id: rightGrid
 		columns: children.length
 		anchors.right: parent.right
-		Battery { }
-		Network { }
-		Clock { }
+		anchors.verticalCenter: parent.verticalCenter
+		Battery { icons: ["","","","",""] }
+		Network { icons: ["󰤯","󰤟","󰤢","󰤥","󰤨"] }
+		Clock { format: "hh:mm AP"; icon: "" }
+		Clock { format: "dd/MM/yyyy"; icon: "󰸘" }
+		
 		Tray { }
-		PowerButton { }
+		PowerButton { lockCommand: "hyprlock"; buttonText: "⏻ " }
 	}
 
 	Grid {
 		id: centerGrid
-		anchors.centerIn: parent
+		anchors.horizontalCenter: parent.horizontalCenter 
+		anchors.verticalCenter: parent.verticalCenter 
 	}
 
-	Grid {
+	ColumnLayout {
 		id: leftGrid
 		anchors.left: parent.left
+		anchors.verticalCenter: parent.verticalCenter
 		Workspaces { persistentWorkspaces: 10 }
 	}
 }

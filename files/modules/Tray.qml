@@ -2,30 +2,29 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.SystemTray
 
-Rectangle {
+import "utils" as Utils
+
+Utils.Base {
 	width: childrenRect.width
 	height: 30
 	radius: 30
-	color: "#a0c7c4bf"
+	rectColor: "#a0c7c4bf"
 	Grid {
 		anchors.centerIn: parent
 	 	spacing: 2
 		Repeater { 
 			model: SystemTray.items
-			Rectangle {
+			Utils.Base {
 				width: 30
 				height: 30
 				radius: 30
-				color: "#00000000"
-				Text { text: mouseArea.selfPos }
-				MouseArea {
-					id: mouseArea
-					anchors.fill: parent
-					onClicked: {
-						var selfPos = mouseArea.mapToItem(root.contentItem, mouseArea.x, mouseArea.y);
-						modelData.display(root,selfPos.x+mouseX,selfPos.y+mouseY) 
-					}					
+				rectColor: "#00000000"
+
+				function clicked() {
+					modelData.display(root,globalPos.x+mouseX,globalPos.y+mouseY)
 				}
+				
+
 				Image { 
 					source: modelData.icon
 					anchors.centerIn: parent

@@ -2,12 +2,19 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-Rectangle { 
+import "utils" as Utils
+
+Utils.Base { 
+	function clicked() { 
+		lock.running = true
+	}
+
+	property var lockCommand: "hyprlock"
+	property var buttonText: "⏻ "
+
 	width: 30
 	height: 30
 	color: "#00000000"
-	Process { command: [ "hyprlock" ]; id: lock }
-	Rectangle { id: hyprlockRect; color: "#a0c7c4bf"; radius: 30; width: 30; height: 30 }
-	Text { text: "⏻ "; anchors.centerIn: hyprlockRect; font.pointSize: 10 }
-	MouseArea { anchors.fill: parent; onClicked: lock.startDetached() }
+	Process { command: [ lockCommand ]; id: lock }
+	Text { text: buttonText; anchors.centerIn: parent; font.pointSize: 10 }
 }
