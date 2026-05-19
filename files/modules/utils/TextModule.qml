@@ -18,7 +18,10 @@ Utils.Base {
 	property var textAnchorTop: false
 	property var textAnchorBottom: false
 
+	childrenWidth: textBox.width
+
 	Text {
+		id: textBox
 		font.pointSize: textModule.textSize
 		text: textModule.text
 		

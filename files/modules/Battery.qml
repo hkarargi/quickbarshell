@@ -11,8 +11,11 @@ Utils.TextIconModule {
 	width: 75
 	height: 30
 	color: "#00000000"
-
+	
+	altIcon: ""
 	icons: ["","","","",""]
-
+	
+	useAlt: !UPower.onBattery
+	
 	number: UPower.displayDevice.percentage*100
 }

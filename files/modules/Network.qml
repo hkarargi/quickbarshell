@@ -17,7 +17,7 @@ Utils.TextIconModule {
 
 	icons: ["󰤯","󰤟","󰤢","󰤥","󰤨"]
 
-	prefix: netUtils.connected ? netUtils.activessid : "Disconnected..."
+	prefix: netUtils.connected ? netUtils.activessid : "Disconnected............."
 	number: netUtils.connected ? netUtils.activessidSignal : 0
 }
 

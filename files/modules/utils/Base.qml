@@ -8,12 +8,14 @@ Rectangle {
 	property var mouseX: 0
 	property var mouseY: 0
 
+	property var childrenWidth
+
 	property var rectColor: "#a0c7c4bf"
 
-	property var blurRadius: 32
+	property var blurRadius: 12
 	property var blurTransparentBorder: true
 	
-	width: childrenRect.width + 20
+	width: childrenWidth + 20
 	height: 30
 	radius: 30
 	color: "#00000000"

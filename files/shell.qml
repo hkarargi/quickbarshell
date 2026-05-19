@@ -24,7 +24,7 @@ PanelWindow {
 		columns: children.length
 		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
-		Battery { icons: ["","","","",""] }
+		Battery { icons: ["","","","",""]; altIcon: "" }
 		Network { icons: ["󰤯","󰤟","󰤢","󰤥","󰤨"] }
 		Clock { format: "hh:mm AP"; icon: "" }
 		Clock { format: "dd/MM/yyyy"; icon: "󰸘" }
