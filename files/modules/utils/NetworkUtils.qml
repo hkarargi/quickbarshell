@@ -17,7 +17,7 @@ Item {
         			ssids = data.split('.')
 			}
 		}
-		Component.onCompleted: running = true
+		running: true
 	}
 
 	Process {
@@ -29,7 +29,7 @@ Item {
         			activessid = data
 			}
 		}
-		Component.onCompleted: running = true
+		running: true
 	}
 
 	Process {
@@ -41,7 +41,7 @@ Item {
         			activessidSignal = parseInt(data)
 			}
 		}
-		Component.onCompleted: running = true
+		running: true
 	}
 
 	Process {
@@ -53,7 +53,7 @@ Item {
 				connected = data == "connected" ? true : false
 			}
 		}
-		Component.onCompleted: running = true
+		running: true
 	}
 
 	Timer {

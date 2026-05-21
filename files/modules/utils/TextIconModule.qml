@@ -5,6 +5,9 @@ import "." as Utils
 Utils.TextModule {
 	id: textIconModule
 
+	textAnchorHCenter: true
+	textAnchorVCenter: true
+
 	property var altIcon: ""
 	property var useAlt: false
 

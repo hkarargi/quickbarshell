@@ -8,11 +8,24 @@ Utils.TextModule {
 	textAnchorHCenter: true
 	textAnchorVCenter: true
 
-	property var format: "hh:mm:ss AP"
-	property var icon: ""
+	property var initialFormat: "hh:mm"
+	property var altFormat: "yyyy-MM-dd"
+	property var initialIcon: ""
+	property var altIcon: "󰸗"
 
-	width: 100
-	height: 30
+	property var format: initialFormat
+	property var icon: initialIcon
+	
+	function clicked() {
+		if (format == initialFormat) {
+			format = altFormat
+			icon = altIcon
+		}
+		else {
+			format = initialFormat
+			icon = initialIcon
+		}
+	}
 
 	SystemClock { id: clock; precision: SystemClock.Seconds }
 	text: Qt.formatDateTime(clock.date, format) + " " + icon
