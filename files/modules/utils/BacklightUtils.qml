@@ -1,34 +1,30 @@
+pragma Singleton
+
 import QtQuick
 import Quickshell
 import Quickshell.Io
 
-Item {
-	property var brightness
+Singleton {
+	property int brightness: 0
 	
-	Timer {
-		interval: 1
-		running: true
-		repeat: true
-		onTriggered: {brightnessProc.running = true}
-	}
-
-	Process { id: process; stdout: SplitParser { onRead: data => {return data}} }
-
 	Process { 
 		id: brightnessProc
-		command: ["sh", "-c", "echo $[100*$(brightnessctl get)/$(brightnessctl max)]"]
+		command: ["sh", "-c", "
+			bpath=$(ls /sys/class/backlight/*/brightness | head -1)
+			max=$(cat ${bpath%/*}/max_brightness)
+			echo $(cat $bpath) $max
+			udevadm monitor --subsystem-match=backlight -u 2>/dev/null | while read line; do
+    				echo $(cat $bpath) $max
+			done
+			"]
 		stdout: SplitParser { 
-			onRead: data => {
-				brightness = data
-				return data
-			}
+			onRead: data => { var parts = data.split(" ");brightness = Math.round(parseInt(parts[0]) / parseInt(parts[1]) * 100)}
 		}
 		running: true
 	}
 
 	function changeBrightnessByPercent(amount) {
-		var change = Math.abs(amount) + "%" + (Math.sign(amount) == "-1" ? "-": "+")
 
-		process.exec({ command: ["sh","-c","brightnessctl set " + change ]})
+		Quickshell.execDetached(["sh","-c","brightnessctl set " + Math.min(Math.max(Math.round(brightness+amount),0),100) + "%" ])
 	}
 }

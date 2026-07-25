@@ -5,20 +5,26 @@ Rectangle {
 	id: base
 	function clicked() {}
 	function wheel(angleDelta) {}
-	property var globalPos: Qt.point(0,0)
-	property var mouseX: 0
-	property var mouseY: 0
+	property point globalPos: Qt.point(0,0)
+	property real mouseX: 0
+	property real mouseY: 0
 
-	property var childrenWidth
+	property real childrenHeight
+	property real childrenWidth
 
-	property var rectColor: "#a0c7c4bf"
+	property bool useVertical: !!parent.useVertical
 
-	property var blurRadius: 12
-	property var blurTransparentBorder: true
-	
-	width: childrenWidth + 20
-	height: 30
-	radius: 30
+	property color rectColor: root.backgroundColor
+
+	property real size: 30
+	property real sizePadding: 20
+
+	property real blurRadius: 0
+	property bool blurTransparentBorder: true
+
+	height: useVertical ? childrenHeight + sizePadding : size
+	width: useVertical ? size : childrenWidth + sizePadding
+	radius: root.itemRadius
 	color: "#00000000"
 	Rectangle {
 		id: baseRect
@@ -37,7 +43,7 @@ Rectangle {
 			base.mouseY = mouseArea.mouseY
 			base.clicked() 
 		} 
-		onWheel: {
+		onWheel: function(wheel) {
 			globalPos = mouseArea.mapToItem(root.contentItem, mouseArea.x, mouseArea.y)
 			base.mouseX = mouseArea.mouseX
 			base.mouseY = mouseArea.mouseY

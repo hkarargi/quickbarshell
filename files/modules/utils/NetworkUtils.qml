@@ -1,70 +1,59 @@
+pragma Singleton
+
 import QtQuick
 import Quickshell
 import Quickshell.Io
 
-Item {
+Singleton {
 	id: networkUtils
-	property var ssids: []
-	property var activessid: ""
-	property var activessidSignal: ""
-	property var connected: false
+	property list<string> ssids: []
+	property string activessid: ""
+	property int activessidSignal: 0
+	property bool connected: false
+	
+	
+
 	Process {
 		id: ssidsGet
-		command: ["sh", "-c", "nmcli -t -f SSID device wifi list | tr '\n' '.'"]
+		command: ["sh", "-c", "nmcli -t -f SSID device wifi list"]
 		stdout: SplitParser {
 			onRead: data => {
 				if (!data) return
-        			ssids = data.split('.')
+        			ssids = data.split('\n')
 			}
 		}
 		running: true
+	}
+	
+
+	Process {
+		id: nmProc
+		running: true
+		command: ["sh","-c","
+		eval $(nmcli -f IN-USE,SIGNAL device wifi | awk '/^\*/{print \$2}' | tr -d 'SIGNAL\n' | awk '{print \"signal=\" $0}')
+		
+		eval $(nmcli device status | awk -F '[[:space:]]{2,}' '(\$2==\"wifi\"){print \"connected=\"$3;print \"ssid=\\\"\" $4 \"\\\"\"}')
+
+		echo \"$signal    $connected    $ssid\"
+
+		"]
+
+		stdout: SplitParser {
+			onRead: data => {
+				var parts = data.split("    ")
+				activessidSignal = parts[0]
+				connected = parts[1]=="connected"
+				activessid = parts[2]
+			}
+		}
 	}
 
 	Process {
-		id: activessidGet
-		command: ["sh", "-c", "nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2"]
+		id: nmcliMonitor
+		running: true
+		command: ["sh","-c","nmcli monitor"]
 		stdout: SplitParser {
-			onRead: data => {
-				if (!data) return
-        			activessid = data
-			}
-		}
-		running: true
-	}
-
-	Process {
-		id: activessidSignalGet
-		command: ["sh", "-c", "nmcli -f IN-USE,SIGNAL device wifi | awk '/^\*/{print \$2}' | tr -d 'SIGNAL\n'"]
-		stdout: SplitParser {
-			onRead: data => {
-				if (data == "") return
-        			activessidSignal = parseInt(data)
-			}
-		}
-		running: true
-	}
-
-	Process {
-		id: connectedGet
-		command: ["sh", "-c", "nmcli -f TYPE,STATE device status | awk '/wifi / {print \$2}'"]
-		stdout: SplitParser {
-			onRead: data => {
-				if (data == "") return
-				connected = data == "connected" ? true : false
-			}
-		}
-		running: true
-	}
-
-	Timer {
-		interval: 2000
-		running: true
-		repeat: true
-		onTriggered: {
-			activessidGet.running = true
-			activessidSignalGet.running = true
-			ssidsGet.running = true
-			connectedGet.running = true
+			onRead: { nmProc.running = true }
 		}
 	}
 }

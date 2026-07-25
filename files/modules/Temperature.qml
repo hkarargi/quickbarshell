@@ -1,17 +1,17 @@
 import Quickshell
 import QtQuick
 
-import "utils" as Utils
+import "templates"
+import "utils"
 
-Utils.TextIconModule {
-	Utils.CPUUtils { id: cpuUtils }
+Symbol {
 
-	number: cpuUtils.cpuTemp
+	number: CPUUtils.cpuTemp
 
 	textAnchorHCenter: true
 	textAnchorVCenter: true
 	
 	icons: ["", "", "", "", ""]
 	
-	text: number + "°C " + icon()
+	text: number + "°C " + (useVertical ? "\n" : "") + icon()
 }

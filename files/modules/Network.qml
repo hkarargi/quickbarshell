@@ -1,24 +1,22 @@
 import QtQuick
 import Quickshell
-import Quickshell.Io
-import Quickshell.Networking
 
-import "utils" as Utils
+import "templates"
+import "utils"
 
-Utils.TextIconModule {
-	Utils.NetworkUtils { id: netUtils}
-	
-	property var showNetworkName: true
+Symbol {
+	property var showNetworkName: false
 
 	function clicked() {
-		Utils.TrayUtils.getTrayItemsIncluding("Network")[0].display(root,globalPos.x+mouseX,globalPos.y+mouseY)
+		TrayUtils.getTrayItemsIncluding("Network")[0].display(root,globalPos.x+mouseX,globalPos.y+mouseY)
 
 	}
 
 	icons: ["󰤯","󰤟","󰤢","󰤥","󰤨"]
 
-	prefix: showNetworkName ? (netUtils.connected ? netUtils.activessid : "Disconnected...") : ""
-	number: netUtils.connected ? netUtils.activessidSignal : 0
+	prefix: showNetworkName ? useVertical ? (NetworkUtils.connected ? NetworkUtils.activessid + "\n" : "Disconnected...\n") : (NetworkUtils.connected ? NetworkUtils.activessid : "Disconnected...") : ""
+	number: NetworkUtils.connected ? NetworkUtils.activessidSignal : 0
+
 }
 
 

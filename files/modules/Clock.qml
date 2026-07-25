@@ -2,14 +2,16 @@ import Quickshell
 import QtQuick
 import Quickshell.Io
 
-import "utils" as Utils
+import "templates"
 
-Utils.TextModule { 
+Symbol { 
 	textAnchorHCenter: true
 	textAnchorVCenter: true
 
-	property var initialFormat: "hh:mm"
-	property var altFormat: "yyyy-MM-dd"
+	property var useAPFormat: true
+	
+	property var initialFormat: useVertical ? "hh\nmm\n" + (useAPFormat ? "AP\n" : "") : "hh:mm" + (useAPFormat ? " AP" : "")
+	property var altFormat: useVertical ? "dd\nMM\nyy\n" : "dd-MM-yy"
 	property var initialIcon: ""
 	property var altIcon: "󰸗"
 
@@ -17,6 +19,7 @@ Utils.TextModule {
 	property var icon: initialIcon
 	
 	function clicked() {
+		console.log(initialFormat)
 		if (format == initialFormat) {
 			format = altFormat
 			icon = altIcon
@@ -28,5 +31,5 @@ Utils.TextModule {
 	}
 
 	SystemClock { id: clock; precision: SystemClock.Seconds }
-	text: Qt.formatDateTime(clock.date, format) + " " + icon
+	text: Qt.formatDateTime(clock.date, format) + " " + icon + "  "
 }

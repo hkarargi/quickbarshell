@@ -2,23 +2,50 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 
-import "utils" as Utils
+import "templates"
+import "utils"
 
-Utils.Base {
+Base {
+	property var workspaceIds: WorkspaceUtils.getWorkspaceIds(persistentWorkspaces)
+
+	property color styleCurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
+	property color styleNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
 	
-	radius: 8; width: Utils.WorkspaceUtils.getWorkspaceIds(persistentWorkspaces).length*19.9; height: 30
+	property color textCurrent: Qt.rgba(root.foregroundColor.r,root.foregroundColor.g,root.foregroundColor.b,root.foregroundColor.a)
+	property color textNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
+
+	property color rectCurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
+	property color rectNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
+
+	radius: Math.max(4,root.itemRadius/4)
+	
+	//height: useVertical ? workspaceIds.length*(size) : size
+	//width: useVertical ? size : workspaceIds.length*(size)
+
+	height: workspacesGrid.implicitHeight
+	width: workspacesGrid.implicitWidth
+
 
 	property int persistentWorkspaces: 10
-	rectColor: "#a0383b40"
-	
+	rectColor: backgroundColor
+
 	Grid { 
-		anchors.fill: parent
-		columns: children.length
+		id: workspacesGrid
+		anchors.centerIn: parent
+		rows: useVertical ? children.length : 1
+		columns: useVertical ? 1 : children.length
 		spacing: 2
+		property var useVertical: parent.useVertical 
+
+
 		Repeater {
-			model: Utils.WorkspaceUtils.getWorkspaceIds(persistentWorkspaces)
-			Utils.TextModule {
-				radius: 30;width: 18;height: 30
+			model: workspaceIds
+			property var useVertical: parent.useVertical
+
+			anchors.horizontalCenter: parent.horizontalCenter
+			BarItem {
+				textWidth: parent.width
+				radius: root.itemRadius
 
 				textAnchorHCenter: true
 				textAnchorVCenter: true
@@ -29,10 +56,11 @@ Utils.Base {
 				function clicked() {
 					Hyprland.dispatch("hl.dsp.focus({workspace = " + num + " })")
 				}				
-			
+
+				styleColor: isCurrent ?  styleCurrent : styleNcurrent 
 				text: num
-				textColor: isCurrent ? "#ff404040" : "#ffffffff"
-				rectColor: isCurrent ? "#80ffffff" : "#00404040"
+				textColor: isCurrent ? textCurrent : textNcurrent
+				rectColor: isCurrent ?  rectCurrent : rectNcurrent 
 			}
 		}
 	}

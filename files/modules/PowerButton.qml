@@ -2,9 +2,9 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-import "utils" as Utils
+import "templates"
 
-Utils.TextModule { 
+BarItem { 
 	function clicked() { 
 		lock.running = true
 	}
@@ -14,9 +14,10 @@ Utils.TextModule {
 	
 	textAnchorHCenter: true
 	textAnchorVCenter: true
+	
+	width: size
+	height: size
 
-	width: 30
-	height: 30
 	color: "#00000000"
 	Process { command: [ lockCommand ]; id: lock }
 	text: buttonText

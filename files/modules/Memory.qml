@@ -1,11 +1,10 @@
 import QtQuick
 import Quickshell
 
-import "utils" as Utils
+import "templates"
+import "utils"
 
-Utils.TextIconModule {
-	Utils.CPUUtils { id: cpuUtils }
-
-	number: cpuUtils.memUsagePercent
+Symbol {
+	number: CPUUtils.memUsagePercent
 	icons: [""]
 }

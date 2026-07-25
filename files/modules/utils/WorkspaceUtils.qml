@@ -7,16 +7,17 @@ import QtQuick
 Singleton {
 	id: workspaceUtils
 	
-	property var maxId: 0
-	property var workspaces: []
+	property int maxId: 0
+	property list<string> workspaces: []
 
 	function getWorkspaceIds(minWorkspaces) {
 		var hyprworkspaces = [...Hyprland.workspaces.values].sort((a, b) => a?.id - b?.id).filter(function(x) { return x.id > 0 });
 		var hyprworkspaceIds = hyprworkspaces.map(item => item.id);
-		maxId = hyprworkspaceIds[hyprworkspaceIds.length-1]
+		var newMaxId = hyprworkspaceIds[hyprworkspaceIds.length-1] ?? 0
+		maxId = newMaxId
 		var minWorkspaceIds = [...Array(minWorkspaces).keys()].map(item => item+1)
 		var conjoinedWorkspaceIds = [...new Set([...hyprworkspaceIds,...minWorkspaceIds])].sort(function(a,b) { return a - b })
-		if (maxId < minWorkspaces) {
+		if (newMaxId < minWorkspaces) {
 			return minWorkspaceIds
 		}
 		return	conjoinedWorkspaceIds
@@ -27,13 +28,9 @@ Singleton {
 			let eventName = event.name;
 			switch (eventName) {
 			case "createworkspacev2":
-				{
-					workspaceUtils.workspaces = getWorkspaceIds(1)           
-				}
-	            		case "destroyworkspacev2":
-	                	{
-					workspaceUtils.workspaces = getWorkspaceIds(1)           
-				}
+	            	case "destroyworkspacev2":
+				workspaceUtils.workspaces = getWorkspaceIds(1)           
+				break
             		}
         	}
     	}

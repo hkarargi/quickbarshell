@@ -2,16 +2,16 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-import "utils" as Utils
+import "templates"
+import "utils"
 
-Utils.TextIconModule {
+Symbol {
 	function wheel(angleDelta) {
-		backlightUtils.changeBrightnessByPercent(Math.sign(angleDelta.y))
+		BacklightUtils.changeBrightnessByPercent(Math.sign(angleDelta.y))
 	}
 
-	Utils.BacklightUtils { id: backlightUtils}
 	
 	icons: ["", "", "", "", "", "", "", "", ""]
 
-	number: backlightUtils.brightness
+	number: BacklightUtils.brightness
 }

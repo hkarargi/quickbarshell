@@ -7,48 +7,89 @@ import QtQuick
 import QtQuick.Layouts
 
 import "modules"
+import "modules/templates"
+import "modules/utils" as Utils
 
 PanelWindow {
 	id: root
-	anchors.top: true
-	anchors.left: true
-	anchors.right: true
-	implicitHeight: 35
-	color: "#00000000"
+	anchors { right: true; left: true; top: true; bottom: true }
+	focusable: false
+	aboveWindows: false
+	color: "#00ffffff"
 	
-	property var backgroundColor: "#a0c7c4bf"
+	exclusionMode: ExclusionMode.Ignore
 
-	Grid {
-		spacing: 8
-		id: rightGrid
-		columns: children.length
-		anchors.right: parent.right
-		anchors.verticalCenter: parent.verticalCenter
-		Network { icons: ["󰤯","󰤟","󰤢","󰤥","󰤨"] }
-		CPU { }
-		Memory { }
-		Temperature { }
-		Backlight { }
-		Battery { }
-		Clock { }
-		Tray { }
-		PowerButton { }
+	property color backgroundColor: "#00000000"
+	property color foregroundColor: "#ffffffff"
+	property real itemRadius: 5	
+	
+	PanelWindow {
+		id: topBar
+		anchors { top: true; left: true; right: true }
+		
+		color: "#007f7f7f"
+
+		implicitHeight: 35
+
+		Compartment {
+			id: rightGrid
+
+			position: "right"
+			
+			Backlight { }
+			Mic { }
+			Speaker { }
+			Clock { }
+			PowerButton { }
+		}
+
+		Compartment {
+			id: centerGrid
+
+			position: "center"
+
+			ActiveWindow { useVertical: false }
+		}
+
+		Compartment {
+			id: leftGrid
+
+			position: "left"
+
+			Workspaces { }
+		}
 	}
 
-	Grid {
-		spacing: 8
-		id: centerGrid
-		anchors.horizontalCenter: parent.horizontalCenter 
-		anchors.verticalCenter: parent.verticalCenter 
-	}
+	PanelWindow {
+		id: leftBar
+		anchors { left: true; top: true; bottom: true }
+		
+		color: "#007f7f7f"
 
-	Grid {
-		spacing: 8
-		id: leftGrid
-		anchors.left: parent.left
-		anchors.verticalCenter: parent.verticalCenter
-		Workspaces { persistentWorkspaces: 10 }
-		ActiveWindow { }
+		implicitWidth: 35
+
+		Compartment {
+			id: topGrid
+
+			position: "top"
+			useVertical: true
+
+			Battery { }
+			Temperature { }
+			Memory { }
+			CPU { }
+		}
+
+		Compartment {
+			id: bottomGrid
+
+			anchors.horizontalCenter: parent.horizontalCenter
+
+			position: "bottom"
+			useVertical: true
+			
+			Network { }
+			Tray { }
+		}
 	}
 }
-

@@ -8,7 +8,7 @@ import QtQuick
 Singleton {
 	id: activeWorkspaceUtils
 
-	property var activeWindowTitle: ""
+	property string activeWindowTitle: ""
 
 	Process {
 		id: getTitle
@@ -16,7 +16,9 @@ Singleton {
 		running: true
 
 		stdout: SplitParser {
-			onRead: data => activeWindowTitle = data
+			onRead: data => {
+				if (data != "") { activeWindowTitle = data }
+			}
 		}
 	}
 
@@ -25,6 +27,8 @@ Singleton {
 	}
 
 	function hyprEvent(event) {
-		getTitle.running = true
+		if (!getTitle.running) {
+			getTitle.running = true
+		}
 	}
 }
