@@ -10,7 +10,7 @@ Symbol {
 		useTimeTillEmpty = !useTimeTillEmpty
 	}
 
-	property var timeToEmpty: UPower.displayDevice.timeToEmpty
+	property var timeToEmpty: UPower.displayDevice.timeToEmpty != 0 ? UPower.displayDevice.timeToEmpty : UPower.displayDevice.timeToFull
 
 	property var useTimeTillEmpty: false
 
@@ -21,6 +21,8 @@ Symbol {
 	
 	useAlt: !UPower.onBattery
 	number: Math.round(UPower.displayDevice.percentage*100)
-	text: useTimeTillEmpty ? timeToEmpty + " " + icon() : number + "% " + icon() + suffix + " "
+	text: useTimeTillEmpty ? 
+(prefix != "" ? prefix + " ":prefix) + Math.floor(timeToEmpty/3600) + "h " + Math.floor(timeToEmpty%3600/60) + "m " + (useVertical ? "\n" : "") + icon() + suffix
+ : (prefix != "" ? prefix + " ":prefix) + number + "% " + (useVertical ? "\n" : "") + icon() + suffix
 
 }

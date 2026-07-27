@@ -1,33 +1,24 @@
 //@ pragma UseQApplication
 
 import Quickshell
-import Quickshell.Hyprland
 import QtQml
 import QtQuick
-import QtQuick.Layouts
 
 import "modules"
 import "modules/templates"
 import "modules/utils" as Utils
 
-PanelWindow {
+ShellRoot {
 	id: root
-	anchors { right: true; left: true; top: true; bottom: true }
-	focusable: false
-	aboveWindows: false
-	color: "#00ffffff"
-	
-	exclusionMode: ExclusionMode.Ignore
-
 	property color backgroundColor: "#00000000"
 	property color foregroundColor: "#ffffffff"
+	property color urgencyColor: "#ffffa0a0"
 	property real itemRadius: 5	
-	
-	PanelWindow {
+	Bar {
 		id: topBar
-		anchors { top: true; left: true; right: true }
-		
-		color: "#007f7f7f"
+		position: "top"
+
+		color: "#007f7f7f" 
 
 		implicitHeight: 35
 
@@ -35,11 +26,11 @@ PanelWindow {
 			id: rightGrid
 
 			position: "right"
-			
-			Backlight { }
+			 
 			Mic { }
 			Speaker { }
-			Clock { }
+			Backlight { }
+			Clock { } 
 			PowerButton { }
 		}
 
@@ -48,7 +39,7 @@ PanelWindow {
 
 			position: "center"
 
-			ActiveWindow { useVertical: false }
+			ActiveWindow { }
 		}
 
 		Compartment {
@@ -60,19 +51,17 @@ PanelWindow {
 		}
 	}
 
-	PanelWindow {
+	Bar {
+
 		id: leftBar
-		anchors { left: true; top: true; bottom: true }
-		
+		position: "left"
 		color: "#007f7f7f"
 
 		implicitWidth: 35
 
 		Compartment {
 			id: topGrid
-
 			position: "top"
-			useVertical: true
 
 			Battery { }
 			Temperature { }
@@ -82,12 +71,8 @@ PanelWindow {
 
 		Compartment {
 			id: bottomGrid
-
-			anchors.horizontalCenter: parent.horizontalCenter
-
 			position: "bottom"
-			useVertical: true
-			
+
 			Network { }
 			Tray { }
 		}

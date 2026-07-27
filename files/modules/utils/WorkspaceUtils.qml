@@ -9,6 +9,7 @@ Singleton {
 	
 	property int maxId: 0
 	property list<string> workspaces: []
+	property var currentWorkspace: Hyprland.focusedWorkspace?.id
 
 	function getWorkspaceIds(minWorkspaces) {
 		var hyprworkspaces = [...Hyprland.workspaces.values].sort((a, b) => a?.id - b?.id).filter(function(x) { return x.id > 0 });
@@ -22,6 +23,11 @@ Singleton {
 		}
 		return	conjoinedWorkspaceIds
 	}
+
+	function isUrgent(i) {
+		return !!Hyprland.workspaces?.values?.find(x => x.id === i)?.urgent
+	}
+
 	Connections {
         	target: Hyprland
         	function onRawEvent(event) {
@@ -29,7 +35,7 @@ Singleton {
 			switch (eventName) {
 			case "createworkspacev2":
 	            	case "destroyworkspacev2":
-				workspaceUtils.workspaces = getWorkspaceIds(1)           
+				workspaceUtils.workspaces = getWorkspaceIds(1)         
 				break
             		}
         	}

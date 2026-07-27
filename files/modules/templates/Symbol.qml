@@ -22,6 +22,6 @@ BarItem {
 		return useAlt ? altIcon : number > 100 ? icons[icons.length - 1] : number < 0 ? icons[0] : icons[Math.ceil(number/perIcon)] 
 	}
 
-	text: (prefix != "" ? prefix + " ":prefix) + number + "% " + (useVertical ? "\n" : "") + icon() + suffix + " "
+	text: (prefix != "" ? prefix + " ":prefix) + number + "% " + (useVertical ? "\n" : "") + icon() + suffix
 	
 }

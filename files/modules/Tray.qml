@@ -4,27 +4,25 @@ import Qt5Compat.GraphicalEffects
 import Quickshell.Services.SystemTray
 
 import "templates"
-import "utils" as Utils
+import "utils"
 
 Base {
-	property var excludedTrays: ["Network"]
+	property var excludedTrays: []
 	id: tray
 
 
-	height: useVertical ? Utils.TrayUtils.getTrayItemsExcluding(excludedTrays).length*size + ( Utils.TrayUtils.getTrayItemsExcluding(excludedTrays).length > 0 ? 25 : 0) : size
+	height: useVertical ? itemsGrid.height : size
 	
-	width: useVertical ? size : Utils.TrayUtils.getTrayItemsExcluding(excludedTrays).length*size + ( Utils.TrayUtils.getTrayItemsExcluding(excludedTrays).length > 0 ? 25 : 0)
+	width: useVertical ? size : itemsGrid.width
 
 	radius: root.itemRadius
 	rectColor: root.backgroundColor
-	Grid {
-		rows: useVertical ? children.length : 1
-		columns: useVertical ? 1 : children.length
-		anchors.centerIn: parent
-		spacing: 2
-		property var node: parent.node
+	Compartment {
+		id: itemsGrid
+		position: "center"
+		
 		Repeater { 
-			model: Utils.TrayUtils.getTrayItemsExcluding(excludedTrays)
+			model: TrayUtils.getTrayItemsExcluding(excludedTrays)
 			Base {
 				width: size
 				height: size
@@ -32,7 +30,7 @@ Base {
 				rectColor: "#00000000"
 
 				function clicked() {
-					modelData.display(root,globalPos.x+mouseX,globalPos.y+mouseY)
+					modelData.display(parentWin,globalPos.x+mouseX,globalPos.y+mouseY)
 				}
 				
 				Image { 

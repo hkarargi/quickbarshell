@@ -9,9 +9,11 @@ Base {
 	property var workspaceIds: WorkspaceUtils.getWorkspaceIds(persistentWorkspaces)
 
 	property color styleCurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
-	property color styleNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
+	property color styleUcurrent: Qt.rgba(0.5*root.urgencyColor.r,0.5*root.urgencyColor.g,0.5*root.urgencyColor.b,root.foregroundColor.a)
+	property color styleNcurrent: Qt.rgba(root.foregroundColor.r,root.foregroundColor.g,root.foregroundColor.b,4*root.backgroundColor.a)
 	
 	property color textCurrent: Qt.rgba(root.foregroundColor.r,root.foregroundColor.g,root.foregroundColor.b,root.foregroundColor.a)
+	property color textUcurrent: Qt.rgba(root.urgencyColor.r,root.urgencyColor.g,root.urgencyColor.b,root.foregroundColor.a)
 	property color textNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
 
 	property color rectCurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
@@ -37,7 +39,6 @@ Base {
 		spacing: 2
 		property var useVertical: parent.useVertical 
 
-
 		Repeater {
 			model: workspaceIds
 			property var useVertical: parent.useVertical
@@ -51,15 +52,16 @@ Base {
 				textAnchorVCenter: true
 
 				property int num: modelData
-				property bool isCurrent: Hyprland.focusedWorkspace?.id === num
+				property bool isCurrent: WorkspaceUtils.currentWorkspace === num
+				property bool isUrgent: WorkspaceUtils.isUrgent(num)
 
 				function clicked() {
 					Hyprland.dispatch("hl.dsp.focus({workspace = " + num + " })")
 				}				
 
-				styleColor: isCurrent ?  styleCurrent : styleNcurrent 
+				styleColor: isCurrent ?  styleCurrent : isUrgent ? styleUcurrent : styleNcurrent 
 				text: num
-				textColor: isCurrent ? textCurrent : textNcurrent
+				textColor: isCurrent ? textCurrent : isUrgent ? textUcurrent : textNcurrent
 				rectColor: isCurrent ?  rectCurrent : rectNcurrent 
 			}
 		}

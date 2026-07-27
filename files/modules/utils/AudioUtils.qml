@@ -27,7 +27,6 @@ Singleton {
 	}
 
 	function changeMicVolumeByPercent(amount) {
-		print(micVolume)
 		if (source?.ready && source?.audio) {
 			source.audio.muted = false;
 			source.audio.volume = (Math.min(Math.max(micVolume+amount,0),100))*0.01

@@ -1,8 +1,12 @@
 import QtQuick
+import Quickshell
 import Qt5Compat.GraphicalEffects
 
 Rectangle {
 	id: base
+	
+	property var parentWin: parent.parentWin
+
 	function clicked() {}
 	function wheel(angleDelta) {}
 	property point globalPos: Qt.point(0,0)
@@ -33,18 +37,20 @@ Rectangle {
 		width: parent.width
 		height: parent.height 
 	}
+
+
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
 		hoverEnabled: true
 		onClicked: { 
-			globalPos = mouseArea.mapToItem(root.contentItem, mouseArea.x, mouseArea.y)
+			globalPos = parentWin?.itemPosition(mouseArea) ?? Qt.point(0,0)
 			base.mouseX = mouseArea.mouseX
 			base.mouseY = mouseArea.mouseY
 			base.clicked() 
 		} 
 		onWheel: function(wheel) {
-			globalPos = mouseArea.mapToItem(root.contentItem, mouseArea.x, mouseArea.y)
+			globalPos = parentWin?.itemPosition(mouseArea) ?? Qt.point(0,0)
 			base.mouseX = mouseArea.mouseX
 			base.mouseY = mouseArea.mouseY
 			base.wheel(wheel.angleDelta) 
