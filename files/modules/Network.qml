@@ -19,7 +19,10 @@ Symbol {
 			popupLoader.source = ""
 		}
 	}
-	icons: NetworkUtils.connectivity != "limited" ? ["󰤯","󰤟","󰤢","󰤥","󰤨"] : ["󰤫","󰤠","󰤣","󰤦","󰤩"]
+	property var normalIcons: ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+	property var limitedIcons: ["󰤫","󰤠","󰤣","󰤦","󰤩"]
+	
+	icons: NetworkUtils.connectivity != "limited" ? normalIcons : limitedIcons
 	altIcon: NetworkUtils.state === "disconnected" ? "󰤭" : "󱥸"
 	useAlt: NetworkUtils.state != "connected"
 

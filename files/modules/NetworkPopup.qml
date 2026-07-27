@@ -17,7 +17,7 @@ PopupWindow {
 	color: "#00000000"
 	visible: true
 
-	property var icons: parent.icons
+	property var icons: parent.normalIcons
 
 	property color styleCol: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
 
