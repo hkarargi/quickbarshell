@@ -11,7 +11,7 @@ Symbol {
 
 	function clicked() {	
 		//TrayUtils.getTrayItemsIncluding("Network")[0].display(parentWin,globalPos.x+mouseX,globalPos.y+mouseY)
-		networkPopup.item.visible = !networkPopup.item?.visible
+		networkPopup.item.visible = true
 	}
 	property var normalIcons: ["󰤯","󰤟","󰤢","󰤥","󰤨"]
 	property var limitedIcons: ["󰤫","󰤠","󰤣","󰤦","󰤩"]

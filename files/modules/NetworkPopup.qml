@@ -66,7 +66,7 @@ PopupWindow {
 						Layout.alignment: Qt.AlignHCenter
 						Layout.margins: 2
 						color: "#00000000"
-						number: modelData[1]
+						number: modelData[1] ?? 0
 						property var ssid: modelData[2]
 
 						property var isCurrent: ssid === NetworkUtils.activessid

@@ -85,7 +85,7 @@ PopupWindow {
 					color: trayItem.isSeparator ? "#ffffffff" : "#00000000"
 
 					height: trayItem.isSeparator ? 1 : textBox.contentHeight
-					width: trayItem.isSeparator || finishedSizing ? parent.implicitWidth : textBox.contentWidth
+					width: trayItem.isSeparator ? parent.implicitWidth -1 : finishedSizing ? parent.implicitWidth: textBox.contentWidth
 
 					anchors.horizontalCenter: parent.horizontalCenter
 
@@ -120,7 +120,7 @@ PopupWindow {
 							style: Text.Outline
 							styleColor: styleCol
 
-							text: trayItem.text	
+							text: trayItem.text 
 						}
 					}
 
@@ -138,6 +138,32 @@ PopupWindow {
 						styleColor: styleCol
 
 						text: ">"
+					}
+
+					CheckBox {
+						enabled: false
+						anchors.left: parent.left
+						anchors.verticalCenter: parent.verticalCenter
+
+						anchors.leftMargin: -10
+
+
+						visible: trayItem.buttonType == QsMenuButtonType.CheckBox
+
+						checked: trayItem.checkState
+					}
+					
+					RadioButton {
+						enabled: false
+						anchors.left: parent.left
+						anchors.verticalCenter: parent.verticalCenter
+
+						anchors.leftMargin: -10
+
+
+						visible: trayItem.buttonType == QsMenuButtonType.RadioButton
+
+						checked: trayItem.checkState
 					}
 
 
@@ -173,7 +199,8 @@ PopupWindow {
 			}
 		}
 	}
-
+	
+	property var firstSizing: true
 	property var finishedSizing: false
 
 	Timer {
@@ -183,15 +210,16 @@ PopupWindow {
 			if (rectangle.width > 0 && rectangle.height > 0 && !finishedSizing && trayPopup.visible) {
 				trayPopup.implicitWidth = rectangle.width 
 				trayPopup.implicitHeight = rectangle.height 
-				trayPopup.anchor.rect.x = useVertical ? parentWin.implicitWidth :  parentRect.x + (parentRect.width - implicitWidth) * 0.5
-				trayPopup.anchor.rect.y = useVertical ? parentRect.y + (parentRect.height - implicitHeight) * 0.5 : parentWin.implicitHeight
+				trayPopup.anchor.rect.x = useVertical ? parentWin.implicitWidth + 2 :  parentRect.x + (parentRect.width - implicitWidth) * 0.5
+				trayPopup.anchor.rect.y = useVertical ? parentRect.y + (parentRect.height - implicitHeight) * 0.5 : parentWin.implicitHeight + 2
 				timer.repeat = false
 
 				rectangle.opacity = 1
 
-				trayPopup.grabFocus = true
-				trayPopup.visible = false
+				if (firstSizing) trayPopup.grabFocus = true
+				if (firstSizing) trayPopup.visible = false
 
+				firstSizing = false
 				finishedSizing = true
 			}
 		}

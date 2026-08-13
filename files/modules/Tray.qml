@@ -41,7 +41,7 @@ Base {
 					active: false
 				}
 				Component.onCompleted: timer.running = true
-				
+
 				Timer {
 					id: timer
 					interval: 100
@@ -53,7 +53,7 @@ Base {
 
 				function clicked() {
 					//trayItem.display(parentWin,globalPos.x+mouseX,globalPos.y+mouseY)
-					trayPopup.item.visible = !trayPopup.item.visible
+					trayPopup.item.visible = true
 				}
 
 				Image { 
@@ -62,6 +62,8 @@ Base {
 					anchors.centerIn: parent
 					width: size
 					height: size
+					sourceSize.width: width
+					sourceSize.height: height
 					fillMode: Image.PreserveAspectFit
 					horizontalAlignment: Image.AlignHCenter
 					verticalAlignment: Image.AlignVCenter
