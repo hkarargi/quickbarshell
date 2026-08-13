@@ -1,4 +1,5 @@
 import QtQuick
+import QtQml
 import Quickshell
 import Qt5Compat.GraphicalEffects
 import Quickshell.Services.SystemTray
@@ -12,15 +13,18 @@ Base {
 
 
 	height: useVertical ? itemsGrid.height : size
-	
+
 	width: useVertical ? size : itemsGrid.width
 
-	radius: root.itemRadius
-	rectColor: root.backgroundColor
+
+	radius: ShellState.shellRoot.itemRadius
+	rectColor: ShellState.shellRoot.backgroundColor
+
+
 	Compartment {
 		id: itemsGrid
 		position: "center"
-		
+
 		Repeater { 
 			model: TrayUtils.getTrayItemsExcluding(excludedTrays)
 			Base {
@@ -29,13 +33,32 @@ Base {
 				radius: size
 				rectColor: "#00000000"
 
-				function clicked() {
-					modelData.display(parentWin,globalPos.x+mouseX,globalPos.y+mouseY)
+				property var trayItem: modelData
+
+				Loader {
+					id: trayPopup
+					source: "TrayPopup.qml"
+					active: false
 				}
+				Component.onCompleted: timer.running = true
 				
+				Timer {
+					id: timer
+					interval: 100
+					repeat: false
+					onTriggered: {
+						trayPopup.active = true
+					}
+				}
+
+				function clicked() {
+					//trayItem.display(parentWin,globalPos.x+mouseX,globalPos.y+mouseY)
+					trayPopup.item.visible = !trayPopup.item.visible
+				}
+
 				Image { 
 					id: icon
-					source: modelData.icon
+					source: trayItem.icon
 					anchors.centerIn: parent
 					width: size
 					height: size
@@ -46,8 +69,8 @@ Base {
 					layer.effect: DropShadow {
 						verticalOffset: 0
 						horizontalOffset: 0
-						radius: 1
-						spread:0.75
+						radius: 0.1
+						spread: 0.75
 						color: "#ff000000"
 					}
 				}

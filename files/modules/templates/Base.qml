@@ -2,6 +2,8 @@ import QtQuick
 import Quickshell
 import Qt5Compat.GraphicalEffects
 
+import "../utils"
+
 Rectangle {
 	id: base
 	
@@ -9,7 +11,11 @@ Rectangle {
 
 	function clicked() {}
 	function wheel(angleDelta) {}
-	property point globalPos: Qt.point(0,0)
+	
+	function globalPosition() {
+		return parentWin?.itemPosition(this) ?? Qt.point(0,0)
+	}
+
 	property real mouseX: 0
 	property real mouseY: 0
 
@@ -18,7 +24,7 @@ Rectangle {
 
 	property bool useVertical: !!parent.useVertical
 
-	property color rectColor: root.backgroundColor
+	property color rectColor: ShellState.shellRoot.backgroundColor
 
 	property real size: 30
 	property real sizePadding: 20
@@ -28,7 +34,7 @@ Rectangle {
 
 	height: useVertical ? childrenHeight + sizePadding : size
 	width: useVertical ? size : childrenWidth + sizePadding
-	radius: root.itemRadius
+	radius: ShellState.shellRoot.itemRadius
 	color: "#00000000"
 	Rectangle {
 		id: baseRect
@@ -44,13 +50,13 @@ Rectangle {
 		anchors.fill: parent
 		hoverEnabled: true
 		onClicked: { 
-			globalPos = parentWin?.itemPosition(mouseArea) ?? Qt.point(0,0)
+			globalPosition()
 			base.mouseX = mouseArea.mouseX
 			base.mouseY = mouseArea.mouseY
 			base.clicked() 
 		} 
 		onWheel: function(wheel) {
-			globalPos = parentWin?.itemPosition(mouseArea) ?? Qt.point(0,0)
+			globalPosition()
 			base.mouseX = mouseArea.mouseX
 			base.mouseY = mouseArea.mouseY
 			base.wheel(wheel.angleDelta) 

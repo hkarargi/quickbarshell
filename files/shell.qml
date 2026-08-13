@@ -6,18 +6,25 @@ import QtQuick
 
 import "modules"
 import "modules/templates"
-import "modules/utils" as Utils
+import "modules/utils"
 
 ShellRoot {
 	id: root
 	property color backgroundColor: "#00000000"
 	property color foregroundColor: "#ffffffff"
 	property color urgencyColor: "#ffffa0a0"
-	property real itemRadius: 5	
-	Bar {
+	property real itemRadius: 5
+ 
+	Binding {
+		target: ShellState
+		property: "shellRoot"
+		value: root
+	}
+
+	Bar { 
 		id: topBar
 		position: "top"
-
+		
 		color: "#007f7f7f" 
 
 		implicitHeight: 35
@@ -26,7 +33,7 @@ ShellRoot {
 			id: rightGrid
 
 			position: "right"
-			 
+
 			Mic { }
 			Speaker { }
 			Backlight { }

@@ -9,9 +9,12 @@ import "utils"
 PopupWindow {
 	id: networkPopup
 
+	property point parentGlobalPos: parent.globalPosition()
+	property rect parentRect: Qt.rect(parentGlobalPos.x,parentGlobalPos.y,parent.width,parent.height)
+	
 	anchor.window: parentWin
-	anchor.rect.x: useVertical ? parentWin.width :  parentWin.itemPosition(parent).x + (parent.width - implicitWidth) * 0.5
-	anchor.rect.y: useVertical ? parentWin.itemPosition(parent).y + (parent.height - implicitHeight) * 0.5: parentWin.height
+	anchor.rect.x: useVertical ? parentWin.implicitWidth :  parentRect.x + (parentRect.width - implicitWidth) * 0.5
+	anchor.rect.y: useVertical ? parentRect.y + (parentRect.height - implicitHeight) * 0.5 : parentWin.implicitHeight
 	implicitWidth: 175
 	implicitHeight: 300
 	color: "#00000000"
@@ -19,27 +22,29 @@ PopupWindow {
 
 	property var icons: parent.normalIcons
 
-	property color styleCol: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
+	property color styleCol: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.foregroundColor.a)
 
-	
-	property color textCurrent: Qt.rgba(root.foregroundColor.r,root.foregroundColor.g,root.foregroundColor.b,root.foregroundColor.a)
-	property color textNcurrent: Qt.rgba(root.foregroundColor.r*0.75,root.foregroundColor.g*0.75,root.foregroundColor.b*0.75,root.foregroundColor.a)
 
-	property color rectCurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
-	property color rectNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
+	property color textCurrent: Qt.rgba(ShellState.shellRoot.foregroundColor.r,ShellState.shellRoot.foregroundColor.g,ShellState.shellRoot.foregroundColor.b,ShellState.shellRoot.foregroundColor.a)
+	property color textNcurrent: Qt.rgba(ShellState.shellRoot.foregroundColor.r*0.75,ShellState.shellRoot.foregroundColor.g*0.75,ShellState.shellRoot.foregroundColor.b*0.75,ShellState.shellRoot.foregroundColor.a)
 
+	property color rectCurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.backgroundColor.a)
+	property color rectNcurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.backgroundColor.a)
+
+
+ 	Component.onCompleted: {  opacity = 1;visible = false;grabFocus = true}
 
 	Rectangle {
 		id: rectangle
 
 		anchors.fill: parent
 		radius: 5
-		color.r: backgroundColor.r
-		color.g: backgroundColor.g
-		color.b: backgroundColor.b//"#a0f0f0f0"
-		color.a: 0.5
+		color.r: Math.max(backgroundColor.r,0.5)
+		color.g: Math.max(backgroundColor.g,0.5)
+		color.b: Math.max(backgroundColor.b,0.5)
+		color.a: Math.max(backgroundColor.a,0.5)
 		ScrollView {
-			
+
 
 			anchors.fill: parent
 			Component.onCompleted: {
@@ -55,7 +60,7 @@ PopupWindow {
 				spacing: -2
 
 				Repeater {
-					model: NetworkUtils.ssids
+					model: NetworkUtils.ssids.sort(function(a,b) { return (b[1] + (b[2]==NetworkUtils.activessid ? 1000 : 0)-(a[1] + (a[2]==NetworkUtils.activessid ? 1000: 0)))})
 
 					Symbol {
 						Layout.alignment: Qt.AlignHCenter
@@ -63,12 +68,12 @@ PopupWindow {
 						color: "#00000000"
 						number: modelData[1]
 						property var ssid: modelData[2]
-						
+
 						property var isCurrent: ssid === NetworkUtils.activessid
-						
-				styleColor: styleCol
-				textColor: isCurrent ? textCurrent : textNcurrent
-				rectColor: isCurrent ?  rectCurrent : rectNcurrent 
+
+						styleColor: styleCol
+						textColor: isCurrent ? textCurrent : textNcurrent
+						rectColor: isCurrent ?  rectCurrent : rectNcurrent 
 						icons: networkPopup.icons
 
 						textAnchorVCenter: true
@@ -86,27 +91,19 @@ PopupWindow {
 					Layout.margins: 2
 					color: "#00000000"
 
-					property var isCurrent: !(NetworkUtils.state === "disconnected")
+					property var isCurrent: NetworkUtils.state === "disconnected"
 
-				styleColor: styleCol
-				textColor: isCurrent ? textCurrent : textNcurrent
-				rectColor: isCurrent ?  rectCurrent : rectNcurrent 
-					
-					text: isCurrent ? "Disconnect" : "Disconnected"
+					styleColor: styleCol
+					textColor: isCurrent ? textCurrent : textNcurrent
+					rectColor: isCurrent ?  rectCurrent : rectNcurrent 
+
+					text: isCurrent ? "Disconnected" : "Disconnect"
 
 					function clicked() {
 						NetworkUtils.disconnect(NetworkUtils.wifiDevice)
 					}
 				}
 			}
-		}
-		
-		Timer {
-			id: endTimer
-			interval: 1250
-			running: false
-			repeat: false
-			onTriggered: popupLoader.source = ""
 		}
 
 		MouseArea {

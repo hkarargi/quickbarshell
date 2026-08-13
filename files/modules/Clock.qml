@@ -19,7 +19,6 @@ Symbol {
 	property var icon: initialIcon
 	
 	function clicked() {
-		console.log(initialFormat)
 		if (format == initialFormat) {
 			format = altFormat
 			icon = altIcon

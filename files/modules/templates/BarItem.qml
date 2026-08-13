@@ -23,6 +23,8 @@ Utils.Base {
 	childrenHeight: textBox.contentHeight
 	childrenWidth: textBox.contentWidth
 
+	property Text textItem: textBox
+
 	Text {
 		verticalAlignment: Text.AlignVCenter
 		horizontalAlignment: Text.AlignHCenter

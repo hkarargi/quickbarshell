@@ -12,12 +12,12 @@ Singleton {
 
 	Process {
 		id: getTitle
-		command: ["sh", "-c", "hyprctl activewindow | grep title: | sed 's/^[^:]*: //'"]
+		command: ["sh", "-c", "hyprctl activewindow | awk 'NR==12{$1=\"\";$0=$0;$1=$1;print}{printf \"\"}'"]
 		running: true
 
 		stdout: SplitParser {
 			onRead: data => {
-				if (data != "") { activeWindowTitle = data }
+				activeWindowTitle = data
 			}
 		}
 	}

@@ -8,18 +8,18 @@ import "utils"
 Base {
 	property var workspaceIds: WorkspaceUtils.getWorkspaceIds(persistentWorkspaces)
 
-	property color styleCurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
-	property color styleUcurrent: Qt.rgba(0.5*root.urgencyColor.r,0.5*root.urgencyColor.g,0.5*root.urgencyColor.b,root.foregroundColor.a)
-	property color styleNcurrent: Qt.rgba(root.foregroundColor.r,root.foregroundColor.g,root.foregroundColor.b,4*root.backgroundColor.a)
+	property color styleCurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.foregroundColor.a)
+	property color styleUcurrent: Qt.rgba(0.5*ShellState.shellRoot.urgencyColor.r,0.5*ShellState.shellRoot.urgencyColor.g,0.5*ShellState.shellRoot.urgencyColor.b,ShellState.shellRoot.foregroundColor.a)
+	property color styleNcurrent: Qt.rgba(ShellState.shellRoot.foregroundColor.r,ShellState.shellRoot.foregroundColor.g,ShellState.shellRoot.foregroundColor.b,4*ShellState.shellRoot.backgroundColor.a)
 	
-	property color textCurrent: Qt.rgba(root.foregroundColor.r,root.foregroundColor.g,root.foregroundColor.b,root.foregroundColor.a)
-	property color textUcurrent: Qt.rgba(root.urgencyColor.r,root.urgencyColor.g,root.urgencyColor.b,root.foregroundColor.a)
-	property color textNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.foregroundColor.a)
+	property color textCurrent: Qt.rgba(ShellState.shellRoot.foregroundColor.r,ShellState.shellRoot.foregroundColor.g,ShellState.shellRoot.foregroundColor.b,ShellState.shellRoot.foregroundColor.a)
+	property color textUcurrent: Qt.rgba(ShellState.shellRoot.urgencyColor.r,ShellState.shellRoot.urgencyColor.g,ShellState.shellRoot.urgencyColor.b,ShellState.shellRoot.foregroundColor.a)
+	property color textNcurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.foregroundColor.a)
 
-	property color rectCurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
-	property color rectNcurrent: Qt.rgba(root.backgroundColor.r,root.backgroundColor.g,root.backgroundColor.b,root.backgroundColor.a)
+	property color rectCurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.backgroundColor.a)
+	property color rectNcurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.backgroundColor.a)
 
-	radius: Math.max(4,root.itemRadius/4)
+	radius: Math.max(4,ShellState.shellRoot.itemRadius/4)
 	
 	//height: useVertical ? workspaceIds.length*(size) : size
 	//width: useVertical ? size : workspaceIds.length*(size)
@@ -46,7 +46,7 @@ Base {
 			anchors.horizontalCenter: parent.horizontalCenter
 			BarItem {
 				textWidth: parent.width
-				radius: root.itemRadius
+				radius: ShellState.shellRoot.itemRadius
 
 				textAnchorHCenter: true
 				textAnchorVCenter: true
