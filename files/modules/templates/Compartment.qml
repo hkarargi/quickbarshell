@@ -19,8 +19,8 @@ Rectangle {
 	Layout.fillWidth: position == "center" || useVertical ? true : false
 	Layout.fillHeight: position == "center" || !useVertical ? true : false
 
-	Layout.minimumWidth: compartmentGrid.implicitWidth
-	Layout.minimumHeight: compartmentGrid.implicitHeight
+	Layout.preferredWidth: compartmentGrid.implicitWidth
+	Layout.preferredHeight: compartmentGrid.implicitHeight
 
 //	anchors.centerIn: position == "center" ? parent : undefined
 //	anchors.right: position == "right" ? parent.right : undefined
