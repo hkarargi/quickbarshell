@@ -8,16 +8,16 @@ import "utils"
 Base {
 	property var workspaceIds: WorkspaceUtils.getWorkspaceIds(persistentWorkspaces)
 
-	property color styleCurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.foregroundColor.a)
+	property color styleCurrent: "#ff000000"//Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.foregroundColor.a)
 	property color styleUcurrent: Qt.rgba(0.5*ShellState.shellRoot.urgencyColor.r,0.5*ShellState.shellRoot.urgencyColor.g,0.5*ShellState.shellRoot.urgencyColor.b,ShellState.shellRoot.foregroundColor.a)
-	property color styleNcurrent: Qt.rgba(ShellState.shellRoot.foregroundColor.r,ShellState.shellRoot.foregroundColor.g,ShellState.shellRoot.foregroundColor.b,4*ShellState.shellRoot.backgroundColor.a)
+	property color styleNcurrent: Qt.rgba(1,1,1,ShellState.shellRoot.backgroundColor.a)//Qt.rgba(ShellState.shellRoot.foregroundColor.r,ShellState.shellRoot.foregroundColor.g,ShellState.shellRoot.foregroundColor.b,4*ShellState.shellRoot.backgroundColor.a)
 	
 	property color textCurrent: Qt.rgba(ShellState.shellRoot.foregroundColor.r,ShellState.shellRoot.foregroundColor.g,ShellState.shellRoot.foregroundColor.b,ShellState.shellRoot.foregroundColor.a)
 	property color textUcurrent: Qt.rgba(ShellState.shellRoot.urgencyColor.r,ShellState.shellRoot.urgencyColor.g,ShellState.shellRoot.urgencyColor.b,ShellState.shellRoot.foregroundColor.a)
 	property color textNcurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.foregroundColor.a)
 
 	property color rectCurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.backgroundColor.a)
-	property color rectNcurrent: Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.backgroundColor.a)
+	property color rectNcurrent: "#00000000"//Qt.rgba(ShellState.shellRoot.backgroundColor.r,ShellState.shellRoot.backgroundColor.g,ShellState.shellRoot.backgroundColor.b,ShellState.shellRoot.backgroundColor.a)
 
 	radius: Math.max(4,ShellState.shellRoot.itemRadius/4)
 	

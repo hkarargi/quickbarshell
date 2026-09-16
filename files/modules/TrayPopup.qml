@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -52,14 +53,14 @@ PopupWindow {
 		onWidthChanged: fit()
 		onHeightChanged: fit()
 
-		height: column.implicitHeight + 32 
-		width: column.implicitWidth + 32
+		height: column.implicitHeight + 16 
+		width: column.implicitWidth + 16
 
 		radius: 5
-		color.r: Math.max(backgroundColor.r,0.5)
-		color.g: Math.max(backgroundColor.g,0.5)
-		color.b: Math.max(backgroundColor.b,0.5)
-		color.a: Math.max(backgroundColor.a,0.5)
+		color.r: backgroundColor.r
+		color.g: backgroundColor.g
+		color.b: backgroundColor.b
+		color.a: 0.7
 		opacity: 0
 
 		Column {
@@ -96,15 +97,14 @@ PopupWindow {
 
 						anchors.horizontalCenter:  parent.horizontalCenter
 						anchors.verticalCenter:  parent.verticalCenter
-						Image { 
+						IconImage { 
 							id: icon
 							visible: trayItem.icon != ""
 							source: trayItem.icon
-							width: size/2
-							height: size/2
-							fillMode: Image.PreserveAspectFit
-							horizontalAlignment: Image.AlignHCenter
-							verticalAlignment: Image.AlignVCenter
+							implicitSize: size/2
+							//fillMode: Image.PreserveAspectFit
+							//horizontalAlignment: Image.AlignHCenter
+							//verticalAlignment: Image.AlignVCenter
 						}
 
 						Text {

@@ -1,8 +1,10 @@
 //@ pragma UseQApplication
+//@ pragma IconTheme breeze
 
 import Quickshell
 import QtQml
 import QtQuick
+import QtQuick.Layouts
 
 import "modules"
 import "modules/templates"
@@ -31,21 +33,24 @@ ShellRoot {
 
 		Compartment {
 			id: rightGrid
-
 			position: "right"
 
+			Network { }
 			Mic { }
 			Speaker { }
 			Backlight { }
+			Memory { }
+			Temperature { }
+			CPU { }
+			Battery { }
 			Clock { } 
 			PowerButton { }
 		}
-
 		Compartment {
 			id: centerGrid
 
 			position: "center"
-
+			//Tray { }
 			ActiveWindow { }
 		}
 
@@ -53,35 +58,7 @@ ShellRoot {
 			id: leftGrid
 
 			position: "left"
-
 			Workspaces { }
-		}
-	}
-
-	Bar {
-
-		id: leftBar
-		position: "left"
-		color: "#007f7f7f"
-
-		implicitWidth: 35
-
-		Compartment {
-			id: topGrid
-			position: "top"
-
-			Battery { }
-			Temperature { }
-			Memory { }
-			CPU { }
-		}
-
-		Compartment {
-			id: bottomGrid
-			position: "bottom"
-
-			Network { }
-			Tray { }
 		}
 	}
 }

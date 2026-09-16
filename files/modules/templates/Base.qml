@@ -9,6 +9,7 @@ Rectangle {
 	
 	property var parentWin: parent.parentWin
 
+
 	function clicked() {}
 	function wheel(angleDelta) {}
 	
